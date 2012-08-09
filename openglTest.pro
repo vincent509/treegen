@@ -14,7 +14,6 @@ SOURCES += main.cpp\
     glwidget.cpp \
     meshdata.cpp \
     vert.cpp \
-    cylinder.cpp \
     mainwindow.cpp
 
 HEADERS  += mainwindow.h \
