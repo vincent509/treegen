@@ -93,13 +93,8 @@ void cylinder::extrude(){
     }
 
     connectCap(n_levels,n_levels);
-
-
-
     n_levels += 1;
     cylinderHeightPos += 1;
-
-
 }
 
 

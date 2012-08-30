@@ -15,10 +15,10 @@ GLWidget::GLWidget(QWidget *parent) :
 m_mouseClick = false;
 this->setMouseTracking(true);
 }
-double tX,tY,tZ;
-double mX;
-double mY;
-double mZ;
+double tX,tY,tZ,lX,lY;
+double mX = 0;
+double mY = 0;
+double mZ = 0;
 cylinder *cyl1 = new cylinder(20);
 //cylinder *cyl2 = new cylinder(20);
 
@@ -32,12 +32,11 @@ void GLWidget::mousePressEvent ( QMouseEvent * e )
         tY = e->pos().y();
 }
 void GLWidget::updateCamera(){
-
-    mX = ((double)m_lastPoint.x()-tX)/(width()/2);
-    mY = ((double)m_lastPoint.y()-tY)/(height()/2);
+    mX = ((float)m_lastPoint.x()-tX)/(width()/2);
+    mY = ((float)m_lastPoint.y() -  tY)/(height()/2);
     double z2 = 1 - mX *mX - mY * mY;
     if(z2 > 0)
-        mZ = (double)sqrt(z2);
+        mZ = (float)sqrt(z2);
     else
         mZ = 0;
  //   std::cout << "X  is: " << mX;
@@ -63,6 +62,8 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * e )
 
 }
 void GLWidget::mouseReleaseEvent( QMouseEvent * e ){
+    lX = e->pos().x() - tX;
+    lY = e->pos().y() - tY;
     m_mouseClick = false;
 }
 
@@ -174,7 +175,14 @@ void GLWidget::paintGL(){
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(mX*5,mY*5,mZ*5,0,0,0,0,1,0);
+   /* temp_mX += mX;
+    temp_mY += mY;
+    temp_mZ += mZ;
+    double magnitude = sqrt(temp_mX*temp_mX+temp_mY*temp_mY+temp_mZ*temp_mZ);
+    temp_mX = temp_mX/magnitude;
+    temp_mY = temp_mY/magnitude;
+    temp_mZ = temp_mZ/magnitude;*/
+    gluLookAt((mX)*5,(mY)*5,(mZ)*5,0,0,0,0,1,0);
 
 
     glClear(GL_COLOR_BUFFER_BIT);
