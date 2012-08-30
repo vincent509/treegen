@@ -19,7 +19,7 @@ public:
     void connectEdge(int v1, int v2, int v3, int v4);
     void mergeCylinder(cylinder *c1);
     void connectCap(int start, int end);
-    void adjustSize(cylinder *c);
+    void scaleSegment(int start, float scaleValue);
     ~cylinder();
    // void createCylinder();
 };

@@ -19,7 +19,7 @@ double tX,tY,tZ;
 double mX;
 double mY;
 double mZ;
-cylinder *cyl1 = new cylinder(4);
+cylinder *cyl1 = new cylinder(20);
 //cylinder *cyl2 = new cylinder(20);
 
 void GLWidget::mousePressEvent ( QMouseEvent * e )

@@ -81,25 +81,24 @@ void cylinder::extrude(){
     //cylinder *e_cylinder = new cylinder(n_edges);
    // e_cylinder->move(0,cylinderHeightPos,0);
     increaseListSize(n_edges, n_edges*6);
-    // adjustSize(e_cylinder);
+
     for(int i = 0; i < n_edges; i++){
         vertexList[listSize+i] = vertexList[listSize+i-n_edges];
     }
     listSize += n_edges;
+    scaleSegment(listSize-n_edges, 0.88);
+
     for(int i = 0; i < n_edges; i++){
         vertexList[listSize-n_edges+i].y += 1;
     }
-    //connectEdge(4, 5,  8, 9);
+
     connectCap(n_levels,n_levels);
-   /* for(int i = 0; i < e_cylinder->n_indices; i++){
-        index[n_indices+i] = (e_cylinder->index[i])+listSize;
-    }*/
-   // n_indices += e_cylinder->n_indices;
+
 
 
     n_levels += 1;
     cylinderHeightPos += 1;
-    //delete e_cylinder;
+
 
 }
 
@@ -114,19 +113,15 @@ void cylinder::connectCap(int start, int end){
 }
 
 
-void cylinder::adjustSize(cylinder *c){
-    float x_dir, z_dir;
+void cylinder::scaleSegment(int start, float scaleValue){
+
     Vert v;
-    for(int i  = 0; i < c->listSize/2; i++){
-        v = c->vertexList[i];
-        c->vertexList[i].Set(Vert(v.x*0.9,v.y,v.z*0.9));
+    for(int i  = start; i < start + n_edges; i++){
+        vertexList[i].x *= scaleValue;
+        vertexList[i].z *= scaleValue;
         //c->vertexList[i].Vert.z = 5.0;
     }
-    for(int i  = listSize/2; i < c->listSize; i++){
-        v = c->vertexList[i];
-        c->vertexList[i].Set(Vert(v.x*0.9*0.9,v.y,v.z*0.9*0.9));
-        //c->vertexList[i].Vert.z = 5.0;
-    }
+
 
 }
 
