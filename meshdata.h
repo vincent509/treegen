@@ -20,6 +20,10 @@ public:
     float* getData();
     void move(float x, float y, float z);
     void draw();
+    void increaseListSize(int v_count, int i_count);
+    void copyVertexData(Vert* newList);
+    void copyIndexData(unsigned short* newList);
+    ~meshData();
 };
 
 

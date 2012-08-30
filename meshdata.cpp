@@ -60,3 +60,33 @@ void meshData::draw(){
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+void meshData::increaseListSize(int v_count, int i_count){
+    Vert *tempV = vertexList;
+   // unsigned short *tempI = index;
+
+    vertexList = new Vert[listSize+v_count];
+   // index = new unsigned short[n_indices+i_count];
+    copyVertexData(tempV);
+   // copyIndexData(tempI);
+    free(tempV);
+
+  // tempV = NULL;
+  //  tempI = NULL;
+}
+
+void meshData::copyVertexData(Vert* newList){
+    for(int i = 0; i < listSize; i++){
+        vertexList[i] = newList[i];
+    }
+}
+void meshData::copyIndexData(unsigned short* newList){
+    for(int i = 0; i < n_indices; i++){
+        index[i] = newList[i];
+    }
+}
+
+meshData::~meshData(){
+    delete vertexList;
+    delete index;
+}

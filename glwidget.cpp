@@ -19,8 +19,8 @@ double tX,tY,tZ;
 double mX;
 double mY;
 double mZ;
-cylinder *cyl1 = new cylinder(20);
-cylinder *cyl2 = new cylinder(20);
+cylinder *cyl1 = new cylinder(4);
+//cylinder *cyl2 = new cylinder(20);
 
 void GLWidget::mousePressEvent ( QMouseEvent * e )
 {
@@ -134,13 +134,13 @@ void GLWidget::initializeGL(){
     glGenBuffers(1, &indiceId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, n_indice * sizeof(GLushort), mesh->index, GL_DYNAMIC_DRAW);*/
-   cyl2->move(0,2,0);
+  // cyl2->move(0,2,0);
     glGenBuffers(1, &cyl1->vertexId);
     glGenBuffers(1, &cyl1->indiceId);
     addVboData(cyl1);
-    glGenBuffers(1, &cyl2->vertexId);
-    glGenBuffers(1, &cyl2->indiceId);
-    addVboData(cyl2);
+    //glGenBuffers(1, &cyl2->vertexId);
+  //  glGenBuffers(1, &cyl2->indiceId);
+  // addVboData(cyl2);
    // addVboData();
 
 
@@ -180,7 +180,7 @@ void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.4f,0.4f,0.8f);
     cyl1->draw();
-    cyl2->draw();
+    //cyl2->draw();
 
     glFlush();
 
@@ -192,11 +192,13 @@ void GLWidget::resizeGL(int w, int h){
 void GLWidget::extrude(){
   //  addVboData();
 
-    cyl1->mergeCylinder(cyl2);
-    //cyl2->extrude();
+  //  cyl1->mergeCylinder(cyl2);
+    cyl1->extrude();
     addVboData(cyl1);
-    cyl2->move(5,0,0);
-    addVboData(cyl2);
+   // delete cyl1;
+    //delete cyl2;
+    //cyl2->move(5,6,6);
+   // addVboData(cyl2);
     updateGL();
 
 }

@@ -9,15 +9,18 @@ public:
     cylinder(int size);
     int n_edges;
     int n_levels;
+    float cylinderHeightPos;
     //int n_indices;
-    int getIndexAtLevel(int index, int level);
+    int getIndexAtLevel(int level, int index);
     void extrude();
     void copyVertArray(Vert* source, Vert* Dest,int size);
     void copyIndexArray( unsigned short* source, unsigned short* dest,int size);
     void deleteLevel();
     void connectEdge(int v1, int v2, int v3, int v4);
     void mergeCylinder(cylinder *c1);
-   // ~cylinder();
+    void connectCap(int start, int end);
+    void adjustSize(cylinder *c);
+    ~cylinder();
    // void createCylinder();
 };
 
