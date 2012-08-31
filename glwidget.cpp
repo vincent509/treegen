@@ -15,7 +15,7 @@ GLWidget::GLWidget(QWidget *parent) :
 m_mouseClick = false;
 this->setMouseTracking(true);
 }
-double tX,tY,tZ,lX,lY;
+int tX,tY,tZ,lX,lY;
 double mX = 0;
 double mY = 0;
 double mZ = 0;
@@ -29,11 +29,14 @@ void GLWidget::mousePressEvent ( QMouseEvent * e )
         // set the flag meaning "click begin"
         m_mouseClick = true;
         tX = e->pos().x();
-        tY = e->pos().y();
+        tY = (e->pos().y()*-1)+height();
 }
 void GLWidget::updateCamera(){
-    mX = ((float)m_lastPoint.x()-tX)/(width()/2);
-    mY = ((float)m_lastPoint.y() -  tY)/(height()/2);
+    int yPos = ((int)m_lastPoint.y()*-1)+height();
+    int xPos = (int)m_lastPoint.x();
+
+    mX = (float)(tX - xPos   + lX)/(width()/2);
+    mY = (float)(tY - yPos   + lY)/(height()/2);
     double z2 = 1 - mX *mX - mY * mY;
     if(z2 > 0)
         mZ = (float)sqrt(z2);
@@ -62,53 +65,19 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * e )
 
 }
 void GLWidget::mouseReleaseEvent( QMouseEvent * e ){
-    lX = e->pos().x() - tX;
-    lY = e->pos().y() - tY;
+    lX -= tX - e->pos().x();
+    lY += tY - ((e->pos().y()*-1)+height());
+ /*   std::cout << "tY  is: " << tY << "\n";
+    std::cout << "pos  is: " << (double)(e->pos().y()*-1)+height() << "\n";
+    std::cout << "lY  is: " << lY << "\n";*/
     m_mouseClick = false;
 }
 
-
-/*meshData GLWidget::createPlane(){
-    meshData *mesh = new meshData(4,6);
-
-    Vert* vertList = new Vert[4];
-  //  vertList = new vert[3];
-
-    vertList[0].Set(Vert(0,0,1));
-
-
-    vertList[1].Set(Vert(1,0,1));
-
-
-    vertList[2].Set(Vert(0,1,1));
-
-
-    vertList[3].Set(Vert(1,1,1));
-
-    mesh->index[0] = 0;
-    mesh->index[1] = 1;
-    mesh->index[2] = 2;
-    mesh->index[3] = 2;
-    mesh->index[4] = 3;
-    mesh->index[5] = 1;
-
-    mesh->addVertexData(vertList,4);
-    return *mesh;
-}*/
-
-//GLuint vertexId;
-//GLuint indiceId;
 int n_vertex;
 int n_indice;
 void GLWidget::initializeGL(){
     this->setMouseTracking(true);
 
-
-   // mesh->extrude();
-  //   mesh->extrude();
-     // mesh->extrude();
-
-   // cyl2->move(0,5,0);
 
     glewInit();
     glMatrixMode( GL_PROJECTION );
@@ -120,29 +89,9 @@ void GLWidget::initializeGL(){
     glShadeModel(GL_FLAT);
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-    /*
-    glEnableClientState(GL_VERTEX_ARRAY);
-    float *data = mesh->getData();
-
-    n_vertex = mesh->listSize;
-    n_indice = (n_vertex)*6;
-
-    glGenBuffers(1, &vertexId);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexId);
-    glBufferData(GL_ARRAY_BUFFER, 3 * n_vertex * sizeof(GLfloat), data, GL_DYNAMIC_DRAW);
-
-
-    glGenBuffers(1, &indiceId);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, n_indice * sizeof(GLushort), mesh->index, GL_DYNAMIC_DRAW);*/
-  // cyl2->move(0,2,0);
     glGenBuffers(1, &cyl1->vertexId);
     glGenBuffers(1, &cyl1->indiceId);
     addVboData(cyl1);
-    //glGenBuffers(1, &cyl2->vertexId);
-  //  glGenBuffers(1, &cyl2->indiceId);
-  // addVboData(cyl2);
-   // addVboData();
 
 
 }
