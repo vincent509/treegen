@@ -77,7 +77,7 @@ int cylinder::getIndexAtLevel(int level, int index){
 }*/
 
 
-void cylinder::extrude(){
+void cylinder::extrude(float scale){
     //cylinder *e_cylinder = new cylinder(n_edges);
    // e_cylinder->move(0,cylinderHeightPos,0);
     increaseListSize(n_edges, n_edges*6);
@@ -86,7 +86,8 @@ void cylinder::extrude(){
         vertexList[listSize+i] = vertexList[listSize+i-n_edges];
     }
     listSize += n_edges;
-    scaleSegment(listSize-n_edges, 0.88);
+
+    scaleSegment(listSize-n_edges, scale);
 
     for(int i = 0; i < n_edges; i++){
         vertexList[listSize-n_edges+i].y += 1;
@@ -95,6 +96,7 @@ void cylinder::extrude(){
     connectCap(n_levels,n_levels);
     n_levels += 1;
     cylinderHeightPos += 1;
+    addVboData();
 }
 
 

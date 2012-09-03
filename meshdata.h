@@ -23,6 +23,10 @@ public:
     void increaseListSize(int v_count, int i_count);
     void copyVertexData(Vert* newList);
     void copyIndexData(unsigned short* newList);
+    void addVboData();
+    void initMesh();
+
+
     ~meshData();
 };
 

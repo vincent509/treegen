@@ -5,7 +5,8 @@
 #include <iostream>
 #include <math.h>
 #include "vert.h"
-#include "cylinder.h"
+//#include "cylinder.h"
+#include "tree.h"
 
 
 GLWidget::GLWidget(QWidget *parent) :
@@ -19,7 +20,8 @@ int tX,tY,tZ,lX,lY;
 double mX = 0;
 double mY = 0;
 double mZ = 0;
-cylinder *cyl1 = new cylinder(20);
+float distance = 5, camAngleX = 1, camAngleY = 1;
+Tree *t = new Tree(12);
 //cylinder *cyl2 = new cylinder(20);
 
 void GLWidget::mousePressEvent ( QMouseEvent * e )
@@ -27,31 +29,30 @@ void GLWidget::mousePressEvent ( QMouseEvent * e )
     // store click position
 
         // set the flag meaning "click begin"
+    if(e->button() == Qt::LeftButton){
         m_mouseClick = true;
         tX = e->pos().x();
         tY = (e->pos().y()*-1)+height();
+    }
 }
-void GLWidget::updateCamera(){
-    int yPos = ((int)m_lastPoint.y()*-1)+height();
-    int xPos = (int)m_lastPoint.x();
+void GLWidget::wheelEvent(QWheelEvent *e)
+{
+    distance -= (float)e->delta()/500;
+    updateGL();
+    //updateCamera();
+}
 
-    mX = (float)(tX - xPos   + lX)/(width()/2);
-    mY = (float)(tY - yPos   + lY)/(height()/2);
-    double z2 = 1 - mX *mX - mY * mY;
-    if(z2 > 0)
-        mZ = (float)sqrt(z2);
-    else
-        mZ = 0;
- //   std::cout << "X  is: " << mX;
-    fflush(0);
-   // std::cout << "Y is: " << mY;
-    fflush(0);
-   // std::cout << "Z  is: " << mZ;
-    fflush(0);
-    double magnitude = sqrt(mX*mX+mY*mY+mZ*mZ);
-    mX = mX/magnitude;
-    mY = mY/magnitude;
-    mZ = mZ/magnitude;
+void GLWidget::updateCamera(){
+    int xPos = (int)m_lastPoint.x();
+    int yPos = ((int)m_lastPoint.y()*-1)+height();
+
+    camAngleX = (float)(tX - xPos   + lX)/(width()/200);
+    camAngleY = (float)(tY - yPos   + lY)/(height()/200);
+
+    mX = 1 * -sinf(camAngleX*(M_PI/180)) * cosf((camAngleY)*(M_PI/180));
+    mY = 1 * -sinf((camAngleY)*(M_PI/180));
+    mZ = -1 * cosf((camAngleX)*(M_PI/180)) * cosf((camAngleY)*(M_PI/180));
+
 }
 
 void GLWidget::mouseMoveEvent ( QMouseEvent * e )
@@ -73,12 +74,9 @@ void GLWidget::mouseReleaseEvent( QMouseEvent * e ){
     m_mouseClick = false;
 }
 
-int n_vertex;
-int n_indice;
 void GLWidget::initializeGL(){
+
     this->setMouseTracking(true);
-
-
     glewInit();
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
@@ -89,14 +87,11 @@ void GLWidget::initializeGL(){
     glShadeModel(GL_FLAT);
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-    glGenBuffers(1, &cyl1->vertexId);
-    glGenBuffers(1, &cyl1->indiceId);
-    addVboData(cyl1);
-
+    t->init();
 
 }
 
-void GLWidget::addVboData(meshData *mesh){
+/*void GLWidget::addVboData(meshData *mesh){
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -118,7 +113,7 @@ void GLWidget::addVboData(meshData *mesh){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     glDisableClientState(GL_VERTEX_ARRAY);
-}
+}*/
 
 void GLWidget::paintGL(){
 
@@ -131,12 +126,12 @@ void GLWidget::paintGL(){
     temp_mX = temp_mX/magnitude;
     temp_mY = temp_mY/magnitude;
     temp_mZ = temp_mZ/magnitude;*/
-    gluLookAt((mX)*5,(mY)*5,(mZ)*5,0,0,0,0,1,0);
+    gluLookAt((mX)*distance,(mY)*distance,(mZ)*distance,0,0,0,0,1,0);
 
 
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.4f,0.4f,0.8f);
-    cyl1->draw();
+    t->draw();
     //cyl2->draw();
 
     glFlush();
@@ -150,8 +145,8 @@ void GLWidget::extrude(){
   //  addVboData();
 
   //  cyl1->mergeCylinder(cyl2);
-    cyl1->extrude();
-    addVboData(cyl1);
+    t->extrude();
+    //addVboData(cyl1);
    // delete cyl1;
     //delete cyl2;
     //cyl2->move(5,6,6);

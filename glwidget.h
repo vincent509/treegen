@@ -2,8 +2,8 @@
 #define GLWIDGET_H
 
 #include <QGLWidget>
-#include "meshdata.h"
-#include "cylinder.h"
+//#include "meshdata.h"
+//#include "cylinder.h"
 
 
 class GLWidget : public QGLWidget
@@ -14,14 +14,14 @@ signals:
 
 public:
     explicit GLWidget(QWidget *parent = 0);
-    
+
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
     //meshData createTri();
    // meshData createPlane();
     GLfloat * getVertexData();
-    void addVboData(meshData *mesh);
+   // void addVboData(meshData *mesh);
     void updateCamera();
 public slots:
     void extrude();
@@ -32,6 +32,8 @@ protected:
     void mousePressEvent ( QMouseEvent * e );
     void mouseMoveEvent( QMouseEvent * e );
     void mouseReleaseEvent( QMouseEvent * e );
+    void wheelEvent(QWheelEvent *e);
+    //void wheelEvent(QWheelEvent * e) {
 private:
     // member variable to store click position
     QPoint m_lastPoint;

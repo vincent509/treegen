@@ -1,7 +1,6 @@
-#include "meshdata.h"
 #ifndef CYLINDER_H
 #define CYLINDER_H
-
+#include "meshdata.h"
 
 class cylinder : public meshData
 {
@@ -12,7 +11,7 @@ public:
     float cylinderHeightPos;
     //int n_indices;
     int getIndexAtLevel(int level, int index);
-    void extrude();
+    void extrude(float scale);
     void copyVertArray(Vert* source, Vert* Dest,int size);
     void copyIndexArray( unsigned short* source, unsigned short* dest,int size);
     void deleteLevel();

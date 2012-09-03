@@ -15,13 +15,15 @@ SOURCES += main.cpp\
     meshdata.cpp \
     vert.cpp \
     mainwindow.cpp \
-    cylinder.cpp
+    cylinder.cpp \
+    tree.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
     meshdata.h \
     vert.h \
-    cylinder.h
+    cylinder.h \
+    tree.h
 
 FORMS    += mainwindow.ui
 

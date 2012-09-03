@@ -61,6 +61,34 @@ void meshData::draw(){
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
+void meshData::addVboData(){
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glEnableClientState(GL_VERTEX_ARRAY);
+
+    //n_vertex = mesh->listSize;
+   // n_indice = mesh->n_indices;
+
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertexId);
+    glBufferData(GL_ARRAY_BUFFER, 3 * (listSize) * sizeof(GLfloat), vertexList, GL_DYNAMIC_DRAW_ARB);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  indiceId);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (n_indices) * sizeof(GLushort), index, GL_DYNAMIC_DRAW_ARB);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
+void meshData::initMesh(){
+
+    glGenBuffers(1, &vertexId);
+    glGenBuffers(1, &indiceId);
+    addVboData();
+
+
+}
 void meshData::increaseListSize(int v_count, int i_count){
     Vert *tempV = vertexList;
    // unsigned short *tempI = index;
