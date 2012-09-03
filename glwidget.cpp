@@ -7,6 +7,7 @@
 #include "vert.h"
 //#include "cylinder.h"
 #include "tree.h"
+ #include <QTime>
 
 
 GLWidget::GLWidget(QWidget *parent) :
@@ -15,7 +16,11 @@ GLWidget::GLWidget(QWidget *parent) :
 
 m_mouseClick = false;
 this->setMouseTracking(true);
+
+timer = new QTime();
+timer->start();
 }
+
 int tX,tY,tZ,lX,lY;
 double mX = 0;
 double mY = 0;
@@ -24,6 +29,7 @@ float distance = 5, camAngleX = 1, camAngleY = 1;
 Tree *t = new Tree(12);
 //cylinder *cyl2 = new cylinder(20);
 
+int frameCount = 0;
 void GLWidget::mousePressEvent ( QMouseEvent * e )
 {
     // store click position
@@ -38,7 +44,7 @@ void GLWidget::mousePressEvent ( QMouseEvent * e )
 void GLWidget::wheelEvent(QWheelEvent *e)
 {
     distance -= (float)e->delta()/500;
-    updateGL();
+    update();
     //updateCamera();
 }
 
@@ -61,7 +67,7 @@ void GLWidget::mouseMoveEvent ( QMouseEvent * e )
     {
         m_lastPoint = e->pos();
         updateCamera();
-        updateGL();
+        update();
     }
 
 }
@@ -86,8 +92,12 @@ void GLWidget::initializeGL(){
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     glShadeModel(GL_FLAT);
     glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    //connect(QAbstractEventDispatcher::instance(), SIGNAL(aboutToBlock()),
+            //this, SLOT(onAboutToBlock()));
 
     t->init();
+}
+
 
 }
 
@@ -116,7 +126,18 @@ void GLWidget::initializeGL(){
 }*/
 
 void GLWidget::paintGL(){
+    frameCount++;
+    float fps;
+    if(frameCount == 10){
+        if(timer->elapsed() != 0)
+            fps = timer->restart();
+             std::cout << "FPS: " << fps << "\n";
+           // emit setFps(timer->elapsed());
 
+        fflush(0);
+        frameCount = 0;
+
+    }
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
    /* temp_mX += mX;
@@ -132,8 +153,7 @@ void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.4f,0.4f,0.8f);
     t->draw();
-    //cyl2->draw();
-
+qApp->processEvents();
     glFlush();
 
 }

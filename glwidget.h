@@ -26,6 +26,9 @@ public:
 public slots:
     void extrude();
 
+signals:
+    void setFps(int newValue);
+
 
 protected:
     // re-implement processing of mouse events
@@ -39,6 +42,7 @@ private:
     QPoint m_lastPoint;
     // member variable - flag of click beginning
     bool m_mouseClick;
+    QTime *timer;
 };
 
 #endif // GLWIDGET_H
