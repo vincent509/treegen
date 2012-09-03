@@ -99,7 +99,7 @@ void GLWidget::initializeGL(){
 }
 
 
-}
+
 
 /*void GLWidget::addVboData(meshData *mesh){
     glMatrixMode( GL_MODELVIEW );
@@ -153,7 +153,6 @@ void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.4f,0.4f,0.8f);
     t->draw();
-qApp->processEvents();
     glFlush();
 
 }

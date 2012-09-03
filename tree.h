@@ -11,6 +11,9 @@ public:
     void draw();
     void extrude();
     void init();
+    float branchChance;
+    int random;
+    int n_branches;
 
 
    // cylinder branches[];
