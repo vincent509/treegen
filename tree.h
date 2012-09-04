@@ -14,6 +14,12 @@ public:
     float branchChance;
     int random;
     int n_branches;
+    void getXRotationMatrix(float angle, float matrix[4][4]);
+    void getYRotationMatrix(float angle, float matrix[4][4]);
+    void getZRotationMatrix(float angle, float matrix[4][4]);
+    void matrixMult(float vector[4][1], float rotMatrix[4][4], float result[4][1]);
+    void branch();
+    void rotateBranch(cylinder *c);
 
 
    // cylinder branches[];
