@@ -147,6 +147,8 @@ void GLWidget::paintGL(){
     temp_mX = temp_mX/magnitude;
     temp_mY = temp_mY/magnitude;
     temp_mZ = temp_mZ/magnitude;*/
+    //glPushMatrix();
+    //glPopMatrix();
     gluLookAt((mX)*distance,(mY)*distance,(mZ)*distance,0,0,0,0,1,0);
 
 
@@ -164,6 +166,7 @@ void GLWidget::extrude(){
   //  addVboData();
 
   //  cyl1->mergeCylinder(cyl2);
+
     t->extrude();
     //addVboData(cyl1);
    // delete cyl1;
