@@ -1,13 +1,15 @@
 #ifndef TREE_H
 #define TREE_H
 #include "cylinder.h"
+#include <vector>
 
-class Tree
-{
+class Tree{
+
 public:
     Tree(int nEdges);
     int treeLevel;
     cylinder *trunk;
+    std::vector<cylinder*> branches;
     void draw();
     void extrude();
     void init();

@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <stdio.h>
+#include <vector>
 
 Tree::Tree(int nEdges)
 {
@@ -11,19 +12,7 @@ Tree::Tree(int nEdges)
     branchChance = 0;
     random;
     n_branches = 1;
-   /* trunk->vertexList[0].x = 1;
-    trunk->vertexList[0].y = 0;
-    trunk->vertexList[0].z = 1;
-
-    trunk->vertexList[1].x = 1;
-    trunk->vertexList[1].y = 0;
-    trunk->vertexList[1].z = 1;
-
-    trunk->vertexList[2].x = 1;
-    trunk->vertexList[2].y = 0;
-    trunk->vertexList[2].z = 1;*/
-
-    //branches = new cylinder[10];
+    branches = std::vector<cylinder*>();
 }
 
 void Tree::getXRotationMatrix(float angle, float matrix[4][4]){
@@ -105,14 +94,12 @@ void Tree::matrixMult(float vector[4][1], float rotMatrix[4][4], float result[4]
 
 void Tree::draw(){
     trunk->draw();
+    for(int i = 0; i < branches.size();i++){
+        cylinder *c = branches[i];
+        c->draw();
+    }
 }
 void Tree::extrude(){
-
-    rotateBranch(trunk);
-
-
-
-    /*
     float scale;
     bool inv;
     srand(5);
@@ -136,10 +123,14 @@ void Tree::extrude(){
     }
     scale = pow(0.99, treeLevel);
     trunk->extrude(scale+(1-scale)/2);
-    treeLevel++;*/
+    treeLevel++;
 }
 void Tree::branch(){
-
+    branches.push_back(new cylinder(10));
+    cylinder *b = branches.front();
+    b->initMesh();
+    b->addVboData();
+    rotateBranch(b);
 
         //float x =
 
