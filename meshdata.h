@@ -2,7 +2,7 @@
 #define MESHDATA_H
 #include "vert.h"
 #include <vector>
-
+#include <math.h>
 
 
 class meshData
@@ -25,6 +25,11 @@ public:
     void copyIndexData(unsigned short* newList);
     void addVboData();
     void initMesh();
+    static void getXRotationMatrix(float angle, float matrix[4][4]);
+    static void getYRotationMatrix(float angle, float matrix[4][4]);
+    static void getZRotationMatrix(float angle, float matrix[4][4]);
+    static void matrixMult(float vector[4][1], float rotMatrix[4][4], float result[4][1]);
+    void moveMesh(float x, float y, float z);
 
 
     ~meshData();

@@ -114,6 +114,95 @@ void meshData::copyIndexData(unsigned short* newList){
     }
 }
 
+void meshData::matrixMult(float vector[4][1], float rotMatrix[4][4], float result[4][1]){
+    for(int i = 0; i < 4; i++){
+        result[i][0] = 0;
+    }
+    int row = 4;
+    for(int i = 0; i < row;i++){
+        for(int j = 0; j < row; j++){
+            result[i][0] += vector[j][0]*rotMatrix[i][j];
+        }
+    }
+}
+
+void meshData::moveMesh(float x, float y, float z){
+    for(int i  = 0; i < listSize;i++){
+        vertexList[i].x += x;
+        vertexList[i].y += y;
+        vertexList[i].z += z;
+    }
+}
+
+void meshData::getXRotationMatrix(float angle, float matrix[4][4]){
+    matrix[0][0] = 1;
+    matrix[0][1] = 0;
+    matrix[0][2] = 0;
+    matrix[0][3] = 0;
+
+    matrix[1][0] = 0;
+    matrix[1][1] = cos(angle);
+    matrix[1][2] = sin(angle);
+    matrix[1][3] = 0;
+
+    matrix[2][0] = 0;
+    matrix[2][1] = sin(angle);
+    matrix[2][2] = -cos(angle);
+    matrix[2][3] = 0;
+
+    matrix[3][0] = 0;
+    matrix[3][1] = 0;
+    matrix[3][2] = 0;
+    matrix[3][3] = 1;
+
+}
+
+void meshData::getYRotationMatrix(float angle, float matrix[4][4]){
+    matrix[0][0] = cos(angle);
+    matrix[0][1] = 0;
+    matrix[0][2] = sin(angle);
+    matrix[0][3] = 0;
+
+    matrix[1][0] = 0;
+    matrix[1][1] = 1;
+    matrix[1][2] = 0;
+    matrix[1][3] = 0;
+
+    matrix[2][0] = -sin(angle);
+    matrix[2][1] = 0;
+    matrix[2][2] = cos(angle);
+    matrix[2][3] = 0;
+
+    matrix[3][0] = 0;
+    matrix[3][1] = 0;
+    matrix[3][2] = 0;
+    matrix[3][3] = 1;
+
+}
+
+void meshData::getZRotationMatrix(float angle, float matrix[4][4]){
+
+    matrix[0][0] = cos(angle);
+    matrix[0][1] = -sin(angle);
+    matrix[0][2] = 0;
+    matrix[0][3] = 0;
+
+    matrix[1][0] = sin(angle);
+    matrix[1][1] = cos(angle);
+    matrix[1][2] = 0;
+    matrix[1][3] = 0;
+
+    matrix[2][0] = 0;
+    matrix[2][1] = 0;
+    matrix[2][2] = 1;
+    matrix[2][3] = 0;
+
+    matrix[3][0] = 0;
+    matrix[3][1] = 0;
+    matrix[3][2] = 0;
+    matrix[3][3] = 1;
+}
+
 meshData::~meshData(){
     delete vertexList;
     delete index;
