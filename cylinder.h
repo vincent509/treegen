@@ -19,6 +19,8 @@ public:
     void mergeCylinder(cylinder *c1);
     void connectCap(int start, int end);
     void scaleSegment(int start, float scaleValue);
+    static Vert* getNormalVector(Vert v1, Vert v2, Vert v3);
+    static Vert* getRotationAngle(Vert *v);
     ~cylinder();
    // void createCylinder();
 };

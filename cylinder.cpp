@@ -121,6 +121,54 @@ void cylinder::scaleSegment(int start, float scaleValue){
 
 
 }
+Vert* cylinder::getRotationAngle(Vert *v){
+    Vert *res = new Vert();
+    Vert *t1 = new Vert(1,0,0);
+    Vert *t2 = new Vert(0,1,0);
+    Vert *t3 = new Vert(0,0,1);
+
+    float t21,t22,t23;
+
+
+    t21 = v->x*t1->x + v->y*t1->y + v->z*t1->z;
+    t22 = v->x*t2->x + v->y*t2->y + v->z*t2->z;
+    t23 = v->x*t3->x + v->y*t3->y + v->z*t3->z;
+
+    float xang = acos(t21)*(180/PI);
+    float yang = acos(t22)*(180/PI);
+    float zang = acos(t23)*(180/PI);
+
+    res->x = xang;
+    res->y = yang;
+    res->z = zang;
+    return res;
+}
+
+Vert* cylinder::getNormalVector(Vert v1, Vert v2, Vert v3){
+    Vert *temp1 = new Vert();
+    Vert *temp2 = new Vert();
+    Vert *res = new Vert();
+
+    temp1->x = (v2.x - v1.x);
+    temp1->y = (v2.y - v1.y);
+    temp1->z = (v2.z - v1.z);
+
+    temp2->x = (v3.x - v1.x);
+    temp2->y = (v3.y - v1.y);
+    temp2->z = (v3.z - v1.z);
+
+
+    res->x = temp1->y*temp2->z - temp1->z*temp2->y;
+    res->y = temp1->z*temp2->x - temp1->x*temp2->z;
+    res->z = temp1->x*temp2->y - temp1->y*temp2->x;
+
+    float dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
+    res->x = res->x/dist;
+    res->y = res->y/dist;
+    res->z = res->z/dist;
+
+    return res;
+}
 
 cylinder::~cylinder(){
 

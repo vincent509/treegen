@@ -54,11 +54,14 @@ void Tree::extrude(){
 void Tree::branch(){
     cylinder *b = new cylinder(10);
     branches.push_back(b);
+    Vert *v = cylinder::getNormalVector(b->vertexList[8],b->vertexList[7],b->vertexList[6]);
 
+    Vert *angles = cylinder::getRotationAngle(v);
+   // std::cout << " xx: " << xang << " y: " << yang << " z: "<< zang;
     b->scaleSegment(0,0.3);
     b->scaleSegment(b->n_edges,0.3);
-    rotateBranch(b,90,0,0);
-    b->moveMesh(0,treeLevel,0);
+    rotateBranch(b,angles->x,angles->y,angles->z);
+    b->moveMesh(0,treeLevel,1);
 
 
     b->initMesh();
