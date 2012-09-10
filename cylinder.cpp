@@ -144,18 +144,18 @@ Vert* cylinder::getRotationAngle(Vert *v){
     return res;
 }
 
-Vert* cylinder::getNormalVector(Vert v1, Vert v2, Vert v3){
+Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
     Vert *temp1 = new Vert();
     Vert *temp2 = new Vert();
     Vert *res = new Vert();
 
-    temp1->x = (v2.x - v1.x);
-    temp1->y = (v2.y - v1.y);
-    temp1->z = (v2.z - v1.z);
+    temp1->x = (v2->x - v1->x);
+    temp1->y = (v2->y - v1->y);
+    temp1->z = (v2->z - v1->z);
 
-    temp2->x = (v3.x - v1.x);
-    temp2->y = (v3.y - v1.y);
-    temp2->z = (v3.z - v1.z);
+    temp2->x = (v3->x - v1->x);
+    temp2->y = (v3->y - v1->y);
+    temp2->z = (v3->z - v1->z);
 
 
     res->x = temp1->y*temp2->z - temp1->z*temp2->y;

@@ -9,7 +9,7 @@ public:
     Tree(int nEdges);
     int treeLevel;
     cylinder *trunk;
-    std::vector<cylinder*> branches;
+    std::vector<Tree*> branches;
     void draw();
     void extrude();
     void init();
@@ -18,8 +18,9 @@ public:
     int n_branches;
 
 
-    void branch();
+    void branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4);
     void rotateBranch(cylinder *c,float xAngle, float yAngle, float zAngle);
+    Vert* getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4);
 
 
    // cylinder branches[];
