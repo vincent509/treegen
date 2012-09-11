@@ -55,13 +55,16 @@ void Tree::extrude(){
 void Tree::branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4){
     Tree *b = new Tree(10);
     branches.push_back(b);
-    Vert *v = cylinder::getNormalVector(v4,v2,v3);
+    Vert *v11 = new Vert(0,0,0);
+    Vert *v22 = new Vert(1,0,-1);
+    Vert *v33 = new Vert(1,1,-1);
+    Vert *v = cylinder::getNormalVector(v1,v2,v3);
 
     Vert *angles = cylinder::getRotationAngle(v);
    //
     b->trunk->scaleSegment(0,0.3);
     b->trunk->scaleSegment(b->trunk->n_edges,0.3);
-    rotateBranch(b->trunk,90,0,0);
+    rotateBranch(b->trunk,angles->x,angles->y,angles->z);
     Vert *m = getCenterPoint(v1,v2,v3,v4);
 
     b->trunk->moveMesh(m->x,m->y,m->z);
@@ -90,18 +93,7 @@ void Tree::rotateBranch(cylinder *c,float xAngle, float yAngle, float zAngle){
     zRad = (PI*zAngle)/180;
 
     cylinder *cyl = c;
-    meshData::getZRotationMatrix(zRad,rotMat);
-    for(int i = 0;i < cyl->listSize;i++){
-        vector[0][0] = cyl->vertexList[i].x;
-        vector[1][0] = cyl->vertexList[i].y;
-        vector[2][0] = cyl->vertexList[i].z;
-        vector[3][0] = 1;
-        meshData::matrixMult(vector,rotMat,result);
-        cyl->vertexList[i].x = result[0][0];
-        cyl->vertexList[i].y = result[1][0];
-        cyl->vertexList[i].z = result[2][0];
 
-    }
     meshData::getXRotationMatrix(xRad,rotMat);
     for(int i = 0;i < cyl->listSize;i++){
         vector[0][0] = cyl->vertexList[i].x;
@@ -117,6 +109,18 @@ void Tree::rotateBranch(cylinder *c,float xAngle, float yAngle, float zAngle){
 
 
     meshData::getYRotationMatrix(yRad,rotMat);
+    for(int i = 0;i < cyl->listSize;i++){
+        vector[0][0] = cyl->vertexList[i].x;
+        vector[1][0] = cyl->vertexList[i].y;
+        vector[2][0] = cyl->vertexList[i].z;
+        vector[3][0] = 1;
+        meshData::matrixMult(vector,rotMat,result);
+        cyl->vertexList[i].x = result[0][0];
+        cyl->vertexList[i].y = result[1][0];
+        cyl->vertexList[i].z = result[2][0];
+
+    }
+    meshData::getZRotationMatrix(zRad,rotMat);
     for(int i = 0;i < cyl->listSize;i++){
         vector[0][0] = cyl->vertexList[i].x;
         vector[1][0] = cyl->vertexList[i].y;

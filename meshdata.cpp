@@ -203,6 +203,29 @@ void meshData::getZRotationMatrix(float angle, float matrix[4][4]){
     matrix[3][3] = 1;
 }
 
+void meshData::getRotationMatrix(float angle1,float angle2, float angle3, float matrix[4][4]){
+
+    matrix[0][0] = cos(angle1)*cos(angle2);
+    matrix[0][1] = cos(angle3)*sin(angle2) + sin(angle3)*sin(angle1)*cos(angle2);
+    matrix[0][2] = sin(angle3)*sin(angle2)-(cos(angle3)*sin(angle1)*cos(angle2));
+    matrix[0][3] = 0;
+
+    matrix[1][0] = -cos(angle1)*sin(angle2);
+    matrix[1][1] = cos(angle3)*cos(angle2)-(sin(angle3)*sin(angle1)*sin(angle2));
+    matrix[1][2] = sin(angle3)*cos(angle2)+cos(angle3)*sin(angle1)*sin(angle2);
+    matrix[1][3] = 0;
+
+    matrix[2][0] = sin(angle1);
+    matrix[2][1] = -sin(angle3)*cos(angle1);
+    matrix[2][2] = cos(angle3)*cos(angle1);
+    matrix[2][3] = 0;
+
+    matrix[3][0] = 0;
+    matrix[3][1] = 0;
+    matrix[3][2] = 0;
+    matrix[3][3] = 1;
+}
+
 meshData::~meshData(){
     delete vertexList;
     delete index;

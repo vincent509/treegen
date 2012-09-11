@@ -138,9 +138,11 @@ Vert* cylinder::getRotationAngle(Vert *v){
     float yang = acos(t22)*(180/PI);
     float zang = acos(t23)*(180/PI);
 
+
     res->x = xang;
     res->y = yang;
     res->z = zang;
+
     return res;
 }
 
@@ -162,11 +164,11 @@ Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
     res->y = temp1->z*temp2->x - temp1->x*temp2->z;
     res->z = temp1->x*temp2->y - temp1->y*temp2->x;
 
-    float dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
+    /*float dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
     res->x = res->x/dist;
     res->y = res->y/dist;
-    res->z = res->z/dist;
-
+    res->z = res->z/dist;*/
+   // dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
     return res;
 }
 
