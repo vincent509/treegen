@@ -114,11 +114,11 @@ void meshData::copyIndexData(unsigned short* newList){
     }
 }
 
-void meshData::matrixMult(float vector[4][1], float rotMatrix[4][4], float result[4][1]){
-    for(int i = 0; i < 4; i++){
+void meshData::matrixMult(float vector[3][1], float rotMatrix[3][3], float result[3][1]){
+    for(int i = 0; i < 3; i++){
         result[i][0] = 0;
     }
-    int row = 4;
+    int row = 3;
     for(int i = 0; i < row;i++){
         for(int j = 0; j < row; j++){
             result[i][0] += vector[j][0]*rotMatrix[i][j];
@@ -203,8 +203,24 @@ void meshData::getZRotationMatrix(float angle, float matrix[4][4]){
     matrix[3][3] = 1;
 }
 
-void meshData::getRotationMatrix(float angle1,float angle2, float angle3, float matrix[4][4]){
+void meshData::getRotationMatrix(Vert *v, float angle, float matrix[3][3]){
+    float x = v->x;
+    float y = v->y;
+    float z = v->z;
+    matrix[0][0] = cos(angle)+(x*x)*(1-cos(angle));
+    matrix[0][1] = y*x*(1-cos(angle))-z*sin(angle);
+    matrix[0][2] = x*z*(1-cos(angle))+y*sin(angle);
 
+    matrix[1][0] = y*x*(1-cos(angle))+z*sin(angle);
+    matrix[1][1] = cos(angle)+y*y+(1-cos(angle));
+    matrix[1][2] = y*z*(1-cos(angle))-x*sin(angle);
+
+    matrix[2][0] = z*x*(1-cos(angle)-y*sin(angle));
+    matrix[2][1] = z*y*(1-cos(angle))+x*sin(angle);
+    matrix[2][2] = cos(angle)+z*z*(1-cos(angle));
+
+
+    /*
     matrix[0][0] = cos(angle1)*cos(angle2);
     matrix[0][1] = cos(angle3)*sin(angle2) + sin(angle3)*sin(angle1)*cos(angle2);
     matrix[0][2] = sin(angle3)*sin(angle2)-(cos(angle3)*sin(angle1)*cos(angle2));
@@ -223,7 +239,7 @@ void meshData::getRotationMatrix(float angle1,float angle2, float angle3, float 
     matrix[3][0] = 0;
     matrix[3][1] = 0;
     matrix[3][2] = 0;
-    matrix[3][3] = 1;
+    matrix[3][3] = 1;*/
 }
 
 meshData::~meshData(){

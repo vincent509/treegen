@@ -19,8 +19,10 @@ public:
 
 
     void branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4);
-    void rotateBranch(cylinder *c,float xAngle, float yAngle, float zAngle);
+    void rotateBranch(cylinder *c,Vert *v,float angle);
     Vert* getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4);
+    void rotateVert(Vert *v,float xAngle, float yAngle, float zAngle);
+   float getScalarAngle(Vert *v1,Vert *v2);
 
 
    // cylinder branches[];
