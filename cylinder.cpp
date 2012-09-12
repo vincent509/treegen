@@ -150,6 +150,7 @@ Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
     Vert *temp1 = new Vert();
     Vert *temp2 = new Vert();
     Vert *res = new Vert();
+    Vert *res2 = new Vert();
 
     temp1->x = (v2->x - v1->x);
     temp1->y = (v2->y - v1->y);
@@ -164,12 +165,20 @@ Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
     res->y = temp1->z*temp2->x - temp1->x*temp2->z;
     res->z = temp1->x*temp2->y - temp1->y*temp2->x;
 
+    Vert *t1 = new Vert(res->x,res->y-1,res->z);
+
     float dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
     res->x = res->x/dist;
     res->y = res->y/dist;
     res->z = res->z/dist;
+
+    res2->x = res->y*t1->z -res->z*t1->y;
+    res2->y = res->z*t1->x - res->x*t1->z;
+    res2->z = res->x*t1->y - res->y*t1->x;
+
+
    // dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
-    return res;
+    return res2;
 }
 
 cylinder::~cylinder(){
