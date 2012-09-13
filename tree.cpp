@@ -73,8 +73,8 @@ void Tree::branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4){
     b->trunk->scaleSegment(b->trunk->n_edges,0.3);
 
     //Vert *angles = cylinder::getRotationAngle(v);
-    float sAngle = getScalarAngle(v,cylinder::getNormalVector(v1,v2,v3));
-    v = cylinder::getNormalVector(v1,v2,v3);
+    float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
+    v = cylinder::getRotationAxis(v1,v2,v3);
     rotateBranch(b->trunk,v,sAngle);
 
     //rotateBranch(b->trunk,angles->x,angles->y,angles->z);
@@ -86,13 +86,7 @@ void Tree::branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4){
     b->trunk->initMesh();
     b->trunk->addVboData();
 }
-float Tree::getScalarAngle(Vert *v1,Vert *v2){
-    float x,y,z;
-    float ls = v1->x*v2->x + v1->y*v2->y + v1->z*v2->z;
-    float d1 = sqrt((v1->x*v1->x) + (v1->y*v1->y) + (v1->z*v1->z));
-    float d2 = sqrt((v2->x*v2->x) + (v2->y*v2->y) + (v2->z*v2->z));
-    return acos(ls/(d1*d2));
-}
+
 
 Vert* Tree::getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4){
 
@@ -102,27 +96,7 @@ Vert* Tree::getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4){
     z = (v1->z+v2->z+v3->z+v4->z)/4;
     return new Vert(x,y,z);
 }
-void Tree::rotateVert(Vert *v,float xAngle, float yAngle, float zAngle){
-   /* float rotMat[4][4];
-    float vector[4][1];
-    float result[4][1];
-    float xRad,yRad,zRad;
-    xRad = (PI*xAngle)/180;
-    yRad = (PI*yAngle)/180;
-    zRad = (PI*zAngle)/180;
-    meshData::getRotationMatrix(xRad,yRad,zRad,rotMat);
 
-    vector[0][0] = v->x;
-    vector[1][0] = v->y;
-    vector[2][0] = v->z;
-    vector[3][0] = 1;
-    meshData::matrixMult(vector,rotMat,result);
-
-    v->x = result[0][0];
-    v->y = result[1][0];
-    v->z = result[2][0];*/
-
-}
 
 void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
     float rotMat[3][3];

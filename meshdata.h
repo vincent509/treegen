@@ -30,6 +30,8 @@ public:
     static void getZRotationMatrix(float angle, float matrix[4][4]);
     static void getRotationMatrix(Vert *v,float angle, float matrix[3][3]);
     static void matrixMult(float vector[3][1], float rotMatrix[3][3], float result[3][1]);
+    static float getScalarAngle(Vert *v1,Vert *v2);
+    void rotateVert(Vert *v,Vert *u,float angle);
     void moveMesh(float x, float y, float z);
 
 

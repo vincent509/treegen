@@ -4,7 +4,7 @@
 #include "GL/glew.h"
 #include "glwidget.h"
 #include "GL/glut.h"
-
+const double PI = 3.1415926;
 meshData::meshData(int vertexSize, int indiceSize)
 {
 
@@ -242,6 +242,29 @@ void meshData::getRotationMatrix(Vert *v, float angle, float matrix[3][3]){
     matrix[3][3] = 1;*/
 }
 
+float meshData::getScalarAngle(Vert *v1,Vert *v2){
+    float x,y,z;
+    float ls = v1->x*v2->x + v1->y*v2->y + v1->z*v2->z;
+    float d1 = sqrt((v1->x*v1->x) + (v1->y*v1->y) + (v1->z*v1->z));
+    float d2 = sqrt((v2->x*v2->x) + (v2->y*v2->y) + (v2->z*v2->z));
+    return acos(ls/(d1*d2));
+}
+void meshData::rotateVert(Vert *v,Vert *u,float angle){
+    float rotMat[3][3];
+    float vector[3][1];
+    float result[3][1];
+
+    getRotationMatrix(u,angle,rotMat);
+
+    vector[0][0] = v->x;
+    vector[1][0] = v->y;
+    vector[2][0] = v->z;
+    matrixMult(vector,rotMat,result);
+    v->x = result[0][0];
+    v->y = result[1][0];
+    v->z = result[2][0];
+
+}
 meshData::~meshData(){
     delete vertexList;
     delete index;
