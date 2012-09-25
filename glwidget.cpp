@@ -9,7 +9,7 @@
 #include "tree.h"
  #include <QTime>
 
-
+const double PI = 3.1415926;
 GLWidget::GLWidget(QWidget *parent) :
     QGLWidget(parent)
 {
@@ -27,6 +27,7 @@ double mY = 0;
 double mZ = 0;
 float distance = 5, camAngleX = 1, camAngleY = 1;
 Tree *t = new Tree(12);
+Tree *test = new Tree(12);
 //cylinder *cyl2 = new cylinder(20);
 
 int frameCount = 0;
@@ -96,6 +97,7 @@ void GLWidget::initializeGL(){
             //this, SLOT(onAboutToBlock()));
 
     t->init();
+    test->init();
 }
 
 
@@ -155,6 +157,7 @@ void GLWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(0.4f,0.4f,0.8f);
     t->draw();
+    test->draw();
     glFlush();
 
 }
@@ -173,9 +176,38 @@ void GLWidget::extrude(){
     //delete cyl2;
     //cyl2->move(5,6,6);
    // addVboData(cyl2);
-    updateGL();
+updateGL();
 
 }
+void GLWidget::xRot(int value){
+    float y = sin((value*PI)/180);
+    float z = cos((value*PI)/180);
+    Vert *v1 = new Vert(-1,0,0);
+    Vert *v2 = new Vert(0,1,0);
+    Vert *v3 = new Vert(1,0,0);
+    Vert *v = new Vert();
+    v->x = 0;
+    v->y = 1;
+    v->z = 0;
+
+   // float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
+    v = cylinder::getRotationAxis(v1,v2,v3);
+    test->rotateBranch(test->trunk,v,0.1);
+    std::cout << "value";
+    fflush(0);
+    updateGL();
+
+
+}
+void GLWidget::yRot(int value){
+   std::cout << "XROT";
+
+}
+void GLWidget::zRot(int value){
+   std::cout << "XROT";
+
+}
+
 
 
 

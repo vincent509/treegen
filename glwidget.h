@@ -25,6 +25,9 @@ public:
     void updateCamera();
 public slots:
     void extrude();
+    void xRot(int value);
+    void yRot(int value);
+    void zRot(int value);
 
 signals:
     void setFps(int newValue);

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
-    <height>531</height>
+    <width>813</width>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,6 +68,15 @@
        </widget>
       </item>
       <item>
+       <widget class="QSpinBox" name="XRotationSpinner"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="YRotationSpinner"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="ZRotationSpinner"/>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -102,6 +111,7 @@
    <slots>
     <signal>setFps(int)</signal>
     <slot>extrude()</slot>
+    <slot>xRot(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -114,8 +124,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>711</x>
-     <y>513</y>
+     <x>802</x>
+     <y>746</y>
     </hint>
     <hint type="destinationlabel">
      <x>510</x>
@@ -150,8 +160,24 @@
      <y>370</y>
     </hint>
     <hint type="destinationlabel">
-     <x>34</x>
-     <y>511</y>
+     <x>45</x>
+     <y>745</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>XRotationSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>xRot(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>790</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>649</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>

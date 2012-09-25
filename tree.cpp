@@ -65,7 +65,7 @@ void Tree::branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4){
     Vert *v11 = new Vert(0,0,0);
     Vert *v22 = new Vert(0,0,1);
     Vert *v33 = new Vert(0,1,0);
-    Vert *v = cylinder::getNormalVector(v1,v2,v3);
+    Vert *v = new Vert();
     v->x = 0;
     v->y = 1;
     v->z = 0;
@@ -117,7 +117,7 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
         if(i >= cyl->listSize/2)
         {
         cyl->vertexList[i].x = result[0][0];
-        cyl->vertexList[i].y = result[1][0]-1;
+        cyl->vertexList[i].y = result[1][0];
         cyl->vertexList[i].z = result[2][0];
         }else{
             cyl->vertexList[i].x = result[0][0];
