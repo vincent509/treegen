@@ -53,33 +53,10 @@ int cylinder::getIndexAtLevel(int level, int index){
     return (n_edges*level)+index;
 }
 
-/*void cylinder::extrude(){
-    cylinder *e_cylinder = new cylinder(n_edges);
-    e_cylinder->move(0,cylinderHeightPos,0);
-    increaseListSize(e_cylinder->listSize, e_cylinder->n_indices);
-     adjustSize(e_cylinder);
-    for(int i = 0; i < e_cylinder->listSize; i++){
-        vertexList[listSize+i] = e_cylinder->vertexList[i];
-    }
-    connectCap(n_levels, n_levels);
-    for(int i = 0; i < e_cylinder->n_indices; i++){
-        index[n_indices+i] = (e_cylinder->index[i])+listSize;
-    }
-    n_indices += e_cylinder->n_indices;
-
-
-
-    listSize += e_cylinder->listSize;
-    n_levels += 2;
-    cylinderHeightPos += 2;
-    delete e_cylinder;
-
-}*/
 
 
 void cylinder::extrude(float scale){
-    //cylinder *e_cylinder = new cylinder(n_edges);
-   // e_cylinder->move(0,cylinderHeightPos,0);
+
     increaseListSize(n_edges, n_edges*6);
 
     for(int i = 0; i < n_edges; i++){
@@ -99,11 +76,7 @@ void cylinder::extrude(float scale){
         vertexList[listSize-n_edges+i].x += n->x;
         vertexList[listSize-n_edges+i].y += n->y;
         vertexList[listSize-n_edges+i].z += n->z;
-
-       // a = getScalarAngle(n,v);
-      //  rotateVert(&vertexList[listSize-n_edges+i],n,a);
     }
-
 
     connectCap(n_levels,n_levels);
     n_levels += 1;
@@ -128,7 +101,6 @@ void cylinder::scaleSegment(int start, float scaleValue){
     for(int i  = start; i < start + n_edges; i++){
         vertexList[i].x *= scaleValue;
         vertexList[i].z *= scaleValue;
-        //c->vertexList[i].Vert.z = 5.0;
     }
 
 
@@ -188,8 +160,6 @@ Vert* cylinder::getRotationAxis(Vert *v1, Vert *v2, Vert *v3){
     res2->y = res->z*t1->x - res->x*t1->z;
     res2->z = res->x*t1->y - res->y*t1->x;
 
-
-   // dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
     return res2;
 }
 Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
@@ -222,10 +192,9 @@ Vert* cylinder::getNormalVector(Vert *v1, Vert *v2, Vert *v3){
     res2->y = res->z*t1->x - res->x*t1->z;
     res2->z = res->x*t1->y - res->y*t1->x;
 
-
-   // dist = sqrt(res->x*res->x + res->y*res->y + res->z*res->z);
     return res;
 }
+
 cylinder::~cylinder(){
 
 }

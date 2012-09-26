@@ -14,6 +14,8 @@ Tree::Tree(int nEdges)
     random;
     n_branches = 0;
     branches = std::vector<Tree*>();
+    upVector = new Vert(0,1,0);
+    branchLevel = 0;
 }
 
 
@@ -30,58 +32,58 @@ void Tree::extrude(){
     float scale;
     srand(time(NULL));
     static float branchProb;
-    branchProb = treeLevel*2 - n_branches-5;
+    branchProb = treeLevel*2 - n_branches-1;
     n_branches;
 
 
    // int randTemp = random % invertedChance;
    // randTemp++;
     for(int i = 0; i < branchProb;i++){
+   // if(branches.size() == 0){
         random = rand() % trunk->n_edges;
         Vert *v1,*v2,*v3,*v4;
         v1 = &trunk->vertexList[trunk->getIndexAtLevel(treeLevel,random)];
         v2 = &trunk->vertexList[trunk->getIndexAtLevel(treeLevel +1 ,random)];
         v3 = &trunk->vertexList[trunk->getIndexAtLevel(treeLevel,random+1)];
         v4 = &trunk->vertexList[trunk->getIndexAtLevel(treeLevel +1 ,random+1)];
-        branch(v1,v2,v3,v4);
+        branch(this,v1,v2,v3,v4);
         n_branches++;
         branchProb--;
-        std::cout << " branching";
+      //  std::cout << " branching";
         fflush(0);
     }
     scale = pow(0.99, treeLevel);
     trunk->extrude(scale+(1-scale)/2);
     treeLevel++;
     Tree *t;
-    for(int i = 0; i < branches.size(); i++){
-        t = branches[i];
+    if(branches.size() > 0){
+        t = branches[0];
         t->extrude();
 
     }
 }
-void Tree::branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4){
+void Tree::branch(Tree *t,Vert *v1, Vert *v2, Vert *v3,Vert *v4){
     Tree *b = new Tree(10);
+    b->branchLevel = t->branchLevel+1;
     branches.push_back(b);
-    Vert *v11 = new Vert(0,0,0);
+   // b->upVector = t->upVector;
+ /*   Vert *v11 = new Vert(0,0,0);
     Vert *v22 = new Vert(0,0,1);
     Vert *v33 = new Vert(0,1,0);
-    Vert *v = new Vert();
-    v->x = 0;
-    v->y = 1;
-    v->z = 0;
+    */
     b->trunk->scaleSegment(0,0.3);
     b->trunk->scaleSegment(b->trunk->n_edges,0.3);
 
-    //Vert *angles = cylinder::getRotationAngle(v);
-    float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
-    v = cylinder::getRotationAxis(v1,v2,v3);
+    float sAngle = meshData::getScalarAngle(b->upVector,cylinder::getRotationAxis(v1,v2,v3));
+    Vert *v = cylinder::getRotationAxis(v1,v2,v3);
     rotateBranch(b->trunk,v,sAngle);
 
-    //rotateBranch(b->trunk,angles->x,angles->y,angles->z);
+    b->upVector = cylinder::getNormalVector(&b->trunk->vertexList[0],&b->trunk->vertexList[1],&b->trunk->vertexList[2]);
+    if(branchLevel > 0){
+        std::cout << "value";
+    }
     Vert *m = getCenterPoint(v1,v2,v3,v4);
-
     b->trunk->moveMesh(m->x,m->y,m->z);
-
 
     b->trunk->initMesh();
     b->trunk->addVboData();
@@ -102,8 +104,8 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
     float rotMat[3][3];
     float vector[3][1];
     float result[3][1];
-    float rad;
-    rad = (PI*angle)/180;
+   // float rad;
+   //rad = (PI*angle)/180;
 
 
     cylinder *cyl = c;
@@ -124,8 +126,6 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
             cyl->vertexList[i].y = result[1][0];
             cyl->vertexList[i].z = result[2][0];
         }
-
-
     }
 /*
 

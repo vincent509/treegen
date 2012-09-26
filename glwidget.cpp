@@ -186,13 +186,13 @@ void GLWidget::xRot(int value){
     Vert *v2 = new Vert(0,1,0);
     Vert *v3 = new Vert(1,0,0);
     Vert *v = new Vert();
-    v->x = 0;
-    v->y = 1;
-    v->z = 0;
+    v->x = 0.707;
+    v->y = 0;
+    v->z = 0.707;
 
    // float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
-    v = cylinder::getRotationAxis(v1,v2,v3);
-    test->rotateBranch(test->trunk,v,0.1);
+    //v = cylinder::getRotationAxis(v1,v2,v3);
+    test->rotateBranch(test->trunk,v,0.3);
     std::cout << "value";
     fflush(0);
     updateGL();

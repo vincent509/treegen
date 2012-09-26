@@ -16,9 +16,11 @@ public:
     float branchChance;
     int random;
     int n_branches;
+    Vert *upVector;
+    int branchLevel;
 
 
-    void branch(Vert *v1, Vert *v2, Vert *v3,Vert *v4);
+    void branch(Tree *t, Vert *v1, Vert *v2,Vert *v3, Vert *v4);
     void rotateBranch(cylinder *c,Vert *v,float angle);
     Vert* getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4);
     void rotateVert(Vert *v,float xAngle, float yAngle, float zAngle);

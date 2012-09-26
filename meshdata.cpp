@@ -115,9 +115,10 @@ void meshData::copyIndexData(unsigned short* newList){
 }
 
 void meshData::matrixMult(float vector[3][1], float rotMatrix[3][3], float result[3][1]){
-    for(int i = 0; i < 3; i++){
-        result[i][0] = 0;
-    }
+    result[0][0] = 0;
+    result[1][0] = 0;
+    result[2][0] = 0;
+
     int row = 3;
     for(int i = 0; i < row;i++){
         for(int j = 0; j < row; j++){
