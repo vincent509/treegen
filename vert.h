@@ -8,6 +8,7 @@ class Vert
         Vert(float _x,float _y, float _z): x(_x), y(_y), z(_z){}
         float x,y,z;
         void Set(Vert v);
+        static Vert* normalize(Vert *v);
     private:
 
 };

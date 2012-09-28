@@ -186,25 +186,61 @@ void GLWidget::xRot(int value){
     Vert *v2 = new Vert(0,1,0);
     Vert *v3 = new Vert(1,0,0);
     Vert *v = new Vert();
-    v->x = 0.707;
+    float angle = (value*PI)/180;
+    v->x = 1;
     v->y = 0;
-    v->z = 0.707;
+    v->z = 0;
 
    // float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
-    //v = cylinder::getRotationAxis(v1,v2,v3);
-    test->rotateBranch(test->trunk,v,0.3);
+ //   v = cylinder::getRotationAxis(v1,v2,v3);
+    test->rotateBranch(test->trunk,v,angle);
     std::cout << "value";
     fflush(0);
     updateGL();
+    test->rotateBranch(test->trunk,v,-angle);
 
 
 }
 void GLWidget::yRot(int value){
-   std::cout << "XROT";
+    float y = sin((value*PI)/180);
+    float z = cos((value*PI)/180);
+    Vert *v1 = new Vert(-1,0,0);
+    Vert *v2 = new Vert(0,1,0);
+    Vert *v3 = new Vert(1,0,0);
+    Vert *v = new Vert();
+    float angle = (value*PI)/180;
+    v->x = 0;
+    v->y = 1;
+    v->z = 0;
+
+   // float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
+ //   v = cylinder::getRotationAxis(v1,v2,v3);
+    test->rotateBranch(test->trunk,v,angle);
+    std::cout << "value";
+    fflush(0);
+    updateGL();
+    test->rotateBranch(test->trunk,v,-angle);
 
 }
 void GLWidget::zRot(int value){
-   std::cout << "XROT";
+    float y = sin((value*PI)/180);
+    float z = cos((value*PI)/180);
+    Vert *v1 = new Vert(-1,0,0);
+    Vert *v2 = new Vert(0,1,0);
+    Vert *v3 = new Vert(1,0,0);
+    Vert *v = new Vert();
+    float angle = (value*PI)/180;
+    v->x = 0;
+    v->y = 0;
+    v->z = 1;
+
+   // float sAngle = meshData::getScalarAngle(v,cylinder::getRotationAxis(v1,v2,v3));
+ //   v = cylinder::getRotationAxis(v1,v2,v3);
+    test->rotateBranch(test->trunk,v,angle);
+    std::cout << "value";
+    fflush(0);
+    updateGL();
+    test->rotateBranch(test->trunk,v,-angle);
 
 }
 

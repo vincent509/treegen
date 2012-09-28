@@ -2,6 +2,7 @@
 #define TREE_H
 #include "cylinder.h"
 #include <vector>
+#include "quaternion.h"
 
 class Tree{
 
@@ -25,6 +26,7 @@ public:
     Vert* getCenterPoint(Vert *v1, Vert *v2, Vert *v3, Vert *v4);
     void rotateVert(Vert *v,float xAngle, float yAngle, float zAngle);
    float getScalarAngle(Vert *v1,Vert *v2);
+   Vert* quaternionRotation(Vert *v, float angle, Vert oldVector);
 
 
    // cylinder branches[];

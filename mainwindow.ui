@@ -112,6 +112,8 @@
     <signal>setFps(int)</signal>
     <slot>extrude()</slot>
     <slot>xRot(int)</slot>
+    <slot>yRot(int)</slot>
+    <slot>zRot(int)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -178,6 +180,38 @@
     <hint type="destinationlabel">
      <x>649</x>
      <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>YRotationSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>yRot(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>793</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ZRotationSpinner</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>widget</receiver>
+   <slot>zRot(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>791</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>663</x>
+     <y>241</y>
     </hint>
    </hints>
   </connection>

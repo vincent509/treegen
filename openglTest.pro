@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     vert.cpp \
     mainwindow.cpp \
     cylinder.cpp \
-    tree.cpp
+    tree.cpp \
+    quaternion.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
     meshdata.h \
     vert.h \
     cylinder.h \
-    tree.h
+    tree.h \
+    quaternion.h
 
 FORMS    += mainwindow.ui
 

@@ -112,7 +112,7 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
 
     meshData::getRotationMatrix(v,angle,rotMat);
     for(int i = 0;i < cyl->listSize;i++){
-        vector[0][0] = cyl->vertexList[i].x;
+      /*  vector[0][0] = cyl->vertexList[i].x;
         vector[1][0] = cyl->vertexList[i].y;
         vector[2][0] = cyl->vertexList[i].z;
         meshData::matrixMult(vector,rotMat,result);
@@ -125,10 +125,16 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
             cyl->vertexList[i].x = result[0][0];
             cyl->vertexList[i].y = result[1][0];
             cyl->vertexList[i].z = result[2][0];
-        }
+            */
+        Vert u = cyl->vertexList[i];
+        Vert *temp = quaternionRotation(v,angle,u);
+        cyl->vertexList[i].x = temp->x;
+        cyl->vertexList[i].y = temp->y;
+        cyl->vertexList[i].z = temp->z;
+        //}
     }
-/*
 
+/*
     meshData::getYRotationMatrix(yRad,rotMat);
     for(int i = 0;i < cyl->listSize;i++){
         vector[0][0] = cyl->vertexList[i].x;
@@ -154,6 +160,36 @@ void Tree::rotateBranch(cylinder *c,Vert *v, float angle){
 
     }*/
     cyl->addVboData();
+}
+
+
+
+Vert* Tree::quaternionRotation(Vert *v, float angle, Vert oldVector){
+    Vert *res = new Vert();
+    Quaternion *q = Quaternion::QuatFromAxisAngle(v,angle);
+    q = Quaternion::normalize(q);
+    Quaternion *p =  new Quaternion();
+    p->x = oldVector.x;
+    p->y = oldVector.y;
+    p->z = oldVector.z;
+    p->w = 0;
+    //p = Quaternion::normalize(p);
+    Quaternion *qInv = new Quaternion();
+    qInv->x = -q->x;
+    qInv->y = -q->y;
+    qInv->z = -q->z;
+
+    Quaternion *temp = new Quaternion();
+    temp = Quaternion::quatMult(q,p);
+   // temp = Quaternion::normalize(temp);
+    //Quaternion *temp2 = Quaternion::quatMult(temp,qInv);
+
+    res->x = temp->x;
+    res->y = temp->y;
+    res->z = temp->z;
+
+    return res;
+
 }
 
 void Tree::init(){
